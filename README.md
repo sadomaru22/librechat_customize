@@ -46,17 +46,17 @@
 - ✅ Compatible across both **[Remote & Local AI services](https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints):**
   - groq, Ollama, Cohere, Mistral AI, Apple MLX, koboldcpp, OpenRouter, together.ai, Perplexity, ShuttleAI, and more
 - 🪄 Generative UI with [Code Artifacts](https://youtu.be/GfTj7O4gmd0?si=WJbdnemZpJzBrJo3)
-   - Create React, HTML code, and Mermaid diagrams right in chat
+  - Create React, HTML code, and Mermaid diagrams right in chat
 - 💾 Create, Save, & Share Custom Presets
 - 🔀 Switch between AI Endpoints and Presets, mid-chat
 - 🔄 Edit, Resubmit, and Continue Messages with Conversation branching
 - 🌿 Fork Messages & Conversations for Advanced Context control
 - 💬 Multimodal Chat:
-    - Upload and analyze images with Claude 3, GPT-4 (including `gpt-4o` and `gpt-4o-mini`), and Gemini Vision 📸
-    - Chat with Files using Custom Endpoints, OpenAI, Azure, Anthropic, & Google. 🗃️
-    - Advanced Agents with Files, Code Interpreter, Tools, and API Actions 🔦
-      - Available through the [OpenAI Assistants API](https://platform.openai.com/docs/assistants/overview) 🌤️
-      - Non-OpenAI Agents in Active Development 🚧
+  - Upload and analyze images with Claude 3, GPT-4 (including `gpt-4o` and `gpt-4o-mini`), and Gemini Vision 📸
+  - Chat with Files using Custom Endpoints, OpenAI, Azure, Anthropic, & Google. 🗃️
+  - Advanced Agents with Files, Code Interpreter, Tools, and API Actions 🔦
+    - Available through the [OpenAI Assistants API](https://platform.openai.com/docs/assistants/overview) 🌤️
+    - Non-OpenAI Agents in Active Development 🚧
 - 🌎 Multilingual UI:
   - English, 中文, Deutsch, Español, Français, Italiano, Polski, Português Brasileiro,
   - Русский, 日本語, Svenska, 한국어, Tiếng Việt, 繁體中文, العربية, Türkçe, Nederlands, עברית
@@ -91,21 +91,24 @@ Click on the thumbnail to open the video☝️
 ## 🌐 Resources
 
 **GitHub Repo:**
-  - **RAG API:** [github.com/danny-avila/rag_api](https://github.com/danny-avila/rag_api)
-  - **Website:** [github.com/LibreChat-AI/librechat.ai](https://github.com/LibreChat-AI/librechat.ai)
+
+- **RAG API:** [github.com/danny-avila/rag_api](https://github.com/danny-avila/rag_api)
+- **Website:** [github.com/LibreChat-AI/librechat.ai](https://github.com/LibreChat-AI/librechat.ai)
 
 **Other:**
-  - **Website:** [librechat.ai](https://librechat.ai)
-  - **Documentation:** [docs.librechat.ai](https://docs.librechat.ai)
-  - **Blog:** [blog.librechat.ai](https://docs.librechat.ai)
+
+- **Website:** [librechat.ai](https://librechat.ai)
+- **Documentation:** [docs.librechat.ai](https://docs.librechat.ai)
+- **Blog:** [blog.librechat.ai](https://docs.librechat.ai)
 
 ---
 
 ## 📝 Changelog
 
 Keep up with the latest updates by visiting the releases page and notes:
+
 - [Releases](https://github.com/danny-avila/LibreChat/releases)
-- [Changelog](https://www.librechat.ai/changelog) 
+- [Changelog](https://www.librechat.ai/changelog)
 
 **⚠️ Please consult the [changelog](https://www.librechat.ai/changelog) for breaking changes before updating.**
 
@@ -142,3 +145,64 @@ For new features, components, or extensions, please open an issue and discuss be
 <a href="https://github.com/danny-avila/LibreChat/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=danny-avila/LibreChat" />
 </a>
+
+# librechat_customize
+
+Goal…
+使えるようにする。
+
+OPENAI_API_KEY を設定する.env に
+自分の普段使っている chatGPT から取得できる
+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
+
+### process
+
+pnpm install 完了
+client 配下でも pnpm install 完了
+
+足りてない uuid とか install して、3090 も pnpm run dev(vite)で立ち上がった。
+
+3080 でも、90 でも画面で検索しようとすると「キーが見つかりません」エラー。
+
+OPENAI_API_KEY
+に上記の api key つけてみた。
+
+上記エラーは解決。
+しかし検索しても何も返ってこない。
+docker-compose 上はちゃんと Request 飛んで、meilisearch が反応している。
+
+api 配下でも pnpm install した。
+結果変わらず。
+3.5 でも変わらず。
+
+[OpenAIClient.chatCompletion][stream] API error
+log に出てるこれが気になる。
+
+CONFIG_PATH
+を活性化
+&
+https://github.com/danny-avila/LibreChat/discussions/2650
+↑ これ参考にして、
+docker-compse.yml の api の volume に下記を追加すると、 - ./librechat.yaml:/app/librechat.yaml
+docker 立ち上げた時の error はなくなり LibreChat のいい感じの log が出るようになったが、まだ画面で結果は返ってこず&上記の APIerror は出続けている。
+
+### docker 立ち上げた時の error なくなってから
+
+GROQ_API_KEY 活性化
+https://console.groq.com/keys
+groq のサイトアクセスして API Key を取得
+↓
+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
+
+https://console.mistral.ai/api-keys/
+Mistral API も key 取得(billing 設定しないといけなかったが、2024/9/20 までの free trial でかいくぐった。)
+↓
+N0g6QWnHo3IohyBKc6RP3jjhO9CVkWgg
+
+できたぁ！！
+結局
+https://techmebrains.co.jp/knowledge/errorlog/you-exceeded-your-current-quota-please-check-your-plan/
+ここに記載の通り、
+You exceeded your current quota, please check your plan and billing details. 
+が悪かった。
+ChatGPT API の billing setting でクレカ登録して 10 ドル突っ込んだらいけた。
